@@ -1,12 +1,6 @@
-FROM php:8.1.1-cli-alpine
-
-
-ARG WWWGROUP=GID 
-ARG WWWUSER=UID 
+FROM php:8.1.3-cli-alpine
 
 ENV TZ=UTC
-
-RUN addgroup -S $WWWGROUP && adduser -S $WWWUSER -G $WWWGROUP
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -15,13 +9,13 @@ RUN apk update && apk upgrade
 # Install dependencies
 RUN apk add mariadb-client ca-certificates postgresql-dev libssh-dev zip libzip-dev libxml2-dev jpegoptim optipng pngquant gifsicle libxslt-dev rabbitmq-c-dev icu-dev oniguruma-dev gmp-dev
 
-RUN apk add freetype-dev libjpeg-turbo-dev libpng-dev jpeg-dev  libwebp-dev
+RUN apk add freetype-dev libjpeg-turbo-dev libpng-dev jpeg-dev libwebp-dev
 
-RUN apk add supervisor bash curl unzip git
+RUN apk add bash curl unzip git
 
 # Install extensions
 
-RUN docker-php-ext-install zip opcache pdo_mysql pdo_pgsql mysqli mbstring bcmath sockets xsl exif intl gmp
+RUN docker-php-ext-install zip opcache pdo_mysql pdo_pgsql mysqli mbstring bcmath sockets xsl exif intl gmp pcntl
 
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && docker-php-ext-install gd
 
