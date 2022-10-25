@@ -1,4 +1,4 @@
-FROM php:8.1.8-cli-alpine
+FROM php:8.1.11-cli-alpine
 
 ENV TZ=UTC
 
